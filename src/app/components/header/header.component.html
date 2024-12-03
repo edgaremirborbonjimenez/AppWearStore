@@ -1,33 +1,7 @@
 <p-menubar [model]="items">
     <ng-template pTemplate="start">
         <svg width="33" height="35" viewBox="0 0 33 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="..." fill="var(--primary-color)" />
-            <mask id="mask0_1_36" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="31" height="33">
-                <path d="..." fill="var(--primary-color-text)" />
-            </mask>
-            <g mask="url(#mask0_1_36)">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="..." />
-            </g>
-            <path d="..." fill="var(--primary-color-text)" />
-            <path d="..." fill="var(--primary-color-text)" />
-            <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="..."
-                fill="var(--primary-color-text)"
-            />
-            <path d="..." fill="var(--primary-color-text)" />
-            <path d="..." fill="var(--primary-color-text)" />
-            <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="..."
-                fill="var(--primary-color-text)"
-            />
-            <path d="..." fill="var(--primary-color-text)" />
-            <path d="..." fill="var(--primary-color-text)" />
-            <path d="..." fill="var(--primary-color-text)" />
-            <path d="..." fill="var(--primary-color-text)" />
+            <!-- Tu SVG aquí -->
         </svg>
     </ng-template>
     <ng-template pTemplate="item" let-item let-root="root">
@@ -40,9 +14,26 @@
         </a>
     </ng-template>
     <ng-template pTemplate="end">
-        <div class="flex align-items-center gap-2">
+        <div class="flex align-items-center justify-content-between w-full">
+            <!-- Campo de búsqueda -->
             <input type="text" pInputText placeholder="Search" class="w-8rem sm:w-auto" />
-            <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" shape="circle" />
+
+            <!-- Nombre del usuario -->
+            <div *ngIf="loggedUser?.name" class="ml-3">
+                {{ loggedUser.name }}
+            </div>
+
+            <!-- Botón de Login/Logout -->
+            <button (click)="_auth.loginWithPopup()" *ngIf="!(_auth.isAuthenticated$ | async); else logoutButton" pRipple class="flex align-items-center p-menuitem-link ml-auto">
+                <span [class]="login.icon"></span>
+                <span class="ml-2">Login</span>
+            </button>
+            <ng-template #logoutButton>
+                <button (click)="_auth.logout()" *ngIf="(_auth.isAuthenticated$ | async)" pRipple class="flex align-items-center p-menuitem-link ml-auto">
+                    <span [class]="login.icon"></span>
+                    <span class="ml-2">Logout</span>
+                </button>
+            </ng-template>
         </div>
     </ng-template>
 </p-menubar>
